@@ -1,0 +1,19 @@
+{
+  "name": "cs-509",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csprojectlab/CS-509.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csprojectlab/CS-509/issues"
+  },
+  "homepage": "https://github.com/csprojectlab/CS-509#readme"
+}
