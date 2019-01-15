@@ -186,11 +186,13 @@
             },
             sort: function () {
                 if(this.chosenSortingAlgo === "Bubble Sort") {                   
-                    let r = bubble_sort (this.displayData, this.criteria);    
+                    let {data} = bubble_sort (this.displayData, this.criteria);    
                     this.displayData = [];                
-                    r.forEach((item) => this.displayData.push(item))
+                    data.forEach((item) => this.displayData.push(item))
                 } else if(this.chosenSortingAlgo === "Insertion Sort") {
-
+                    let {data} = insertion_sort (this.displayData, this.criteria);    
+                    this.displayData = [];                
+                    data.forEach((item) => this.displayData.push(item))
                 }              
             }
         }

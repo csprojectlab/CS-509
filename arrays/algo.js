@@ -1,4 +1,39 @@
+let swap_count = 0;
+let start_time = 0;
+let end_time = 0;
 
+
+
+function insertion_sort (data, attribute) {
+    start_time = new Date().getTime();
+    for (let i = 1; i < data.length; i++) {
+        let key = data[i];
+        let j = i - 1;
+        while (j >= 0 && (compareTo (data[j], key, attribute) > 0)) {
+            data[j+1] = data[j]
+            j--;
+        }
+        data[j+1] = key;
+    }
+    end_time = new Date ().getTime();
+    execution_time = end_time - start_time
+    return {data: data, execution_time: end_time - start_time};
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} attribute 
+ */
+function bubble_sort (data, attribute) {
+    start_time = new Date().getTime();
+    for (let i = 0; i < data.length; i++) 
+        for (let j = 0; j < data.length - i - 1; j++) 
+            if(compareTo (data[j], data[j+1], attribute) > 0)
+                swap(data, j, j+1)
+    end_time = new Date ().getTime();
+    return {data: data, execution_time: end_time - start_time};
+}
 /**
  * 
  * @param {*} data 
@@ -35,8 +70,7 @@ function binary_search_util (data, key, attribute, low, high) {
  */
 function linear_search (data, key, attribute) {
     for (let i = 0; i < data.length; i++) {
-       if(equalsTo (data[i], key, attribute) == 0) {
-           console.log(data[i])
+       if(equalsTo (data[i], key, attribute) == 0) {           
            return data[i];
        }
     }
@@ -76,28 +110,28 @@ function swap (arr, i, j) {
  * @param {*} attribute 
  * To compare between the objects based on their attributes.
  */
-function compareTo (arr, i, j, attribute) {
+function compareTo (first, second, attribute) {
     if(!attribute)      return;
     switch (attribute) {
-        case 'Roll No': {
-            if(arr[i].rollNo > arr[j].rollNo)   return 1000;
-            else if(arr[i].rollNo < arr[j].rollNo)      return -1000;
+        case 'Roll No': {           
+            if(first.rollNo > second.rollNo)   return 1000;
+            else if(first.rollNo < second.rollNo)      return -1000;
             else    return 0;
         }
         case 'Name': {
-           return arr[i].name.localeCompare(arr[j].name)
+           return first.name.localeCompare(second.name)
         }
         case 'Subject': {
-           return arr[i].subject.localeCompare(arr[j].subject)
+           return first.subject.localeCompare(second.subject)
         }
         case 'Marks': {
-            if(arr[i].marks > arr[j].marks)   return 1000;
-            else if(arr[i].marks < arr[j].marks)      return -1000;
+            if(first.marks > second.marks)   return 1000;
+            else if(first.marks < second.marks)      return -1000;
             else    return 0;
         }
         default: {
-            if(arr[i] > arr[j])   return 1000;
-            else if(arr[i] < arr[j])      return -1000;
+            if(first > second)   return 1000;
+            else if(first < second)      return -1000;
             else    return 0;
         }
     }
