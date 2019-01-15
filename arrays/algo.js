@@ -1,6 +1,42 @@
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} key 
+ * @param {*} attribute 
+ */
+function binary_search (data, key, attribute) {    
+    return binary_search_util (data, key, attribute, 0, data.length - 1)
+}
+/**
+ * 
+ * @param {*} data 
+ * @param {*} key 
+ * @param {*} attribute 
+ * @param {*} low 
+ * @param {*} high 
+ */
+function binary_search_util (data, key, attribute, low, high) {
+    if(low > high)      return -1;
+    let mid = Math.floor ((low + high) / 2)    
+    if(equalsTo (data[mid], key, attribute) == 0)
+        return mid;
+    else if(equalsTo (data[mid], key, attribute) > 0)    // Mid is greater than the key
+        return binary_search_util (data, key, attribute, low, mid - 1);
+    return binary_search_util (data, key, attribute, mid + 1, high);    
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} key 
+ * @param {*} attribute 
+ * Search the key based on the attribute passed.
+ */
 function linear_search (data, key, attribute) {
     for (let i = 0; i < data.length; i++) {
-       if(equalsTo (data[i], key, attribute)) {
+       if(equalsTo (data[i], key, attribute) == 0) {
+           console.log(data[i])
            return data[i];
        }
     }
@@ -71,25 +107,32 @@ function compareTo (arr, i, j, attribute) {
  * @param {*} info 
  * @param {*} key 
  * @param {*} attribute 
+ * info is an object, not an array.
  */
 function equalsTo (info, key, attribute) {
     if(!attribute)      return;
     switch (attribute) {
         case 'Roll No': {
-            return (info.rollNo == key)             
+            if(info.rollNo > key)      return 1000;
+            else if(info.rollNo < key)      return -1000;
+            else return 0;
         }
-        case 'Name': {
-           return info.name.localeCompare(info.name) == 0
+        case 'Name': {           
+            return info.name.localeCompare(key)
         }
         case 'Subject': {
-           return (info.subject.localeCompare(info.subject) == 0) 
+           return (info.subject.localeCompare(key)) 
            
         }
         case 'Marks': {
-            return info.marks == key
+           if(info.marks > key)     return 1000;
+           else if(info.marks < key)    return -1000;
+           else     return 0;
         }
         default: {
-            return (info == key)
+           if(info > key)       return 1000;
+           else if(info < key)  return -1000
+           else return 0;
         }
     }
 }
