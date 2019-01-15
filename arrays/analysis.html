@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-content>
+        <v-container>
+            <v-toolbar absolute color="teal" dark scroll-off-screen>
+                <v-toolbar-side-icon></v-toolbar-side-icon>
+                <v-toolbar-title>Complexity Analysis</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon><v-icon left>more_vert</v-icon></v-btn>
+            </v-toolbar><br><br>
+            <v-layout>
+                <v-flex xs10 pt-3 offset-xs1>
+                    <v-card class="elevation-12">
+                        <v-toolbar dark color="primary">
+                            <v-toolbar-title>Algorithm Complexity Analysis</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <v-icon>list</v-icon>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-layout row wrap>
+                                <v-flex xs12>  <!-- FOR THE SIZE OF ARRAY-->
+                                    <v-layout col>
+                                       <v-flex offset-xs2>
+                                           <v-autocomplete v-model="dataSize" :items="sizes" label="Size" prepend-icon="list"></v-autocomplete>
+                                       </v-flex>
+                                       <v-flex><v-btn dark color="green" @click="randomize()">Randomize</v-btn></v-flex>
+                                    </v-layout>
+                                </v-flex>
+                                <v-flex>  <!-- TO DISPLAY THE CONTENT AND FILTER. -->
+                                    <v-layout col>
+                                        <v-flex xs4> <!-- FILTER BLOCK-->
+                                            <v-card class="elevation-3">
+                                                <v-toolbar dark color="purple">
+                                                    <v-toolbar-title>Filter</v-toolbar-title>
+                                                </v-toolbar>
+                                                <v-card-text>
+                                                    <v-layout row wrap>
+                                                        <v-flex>
+                                                            <v-autocomplete v-model="chosenSortingAlgo" :items="sortBy" label="SortBy"></v-autocomplete>
+                                                        </v-flex>
+                                                        <v-flex>
+                                                            <v-btn dark color="error" @click="sort()">Sort</v-btn>
+                                                        </v-flex>
+                                                    </v-layout>
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-flex>
+                                        <v-flex pl-3> <!-- TABLE BLOCK -->
+                                            <v-card class="elevation-3">
+                                                <v-toolbar dark color="error">
+                                                    <v-toolbar-title>Analysis</v-toolbar-title>
+                                                </v-toolbar>
+                                                <v-card-text>
+                                                    <v-layout row wrap>
+                                                        <v-flex xs8 offset-xs2>
+                                                            <v-autocomplete :items="arrayElements" :label=`Elements:${dataSize}`></v-autocomplete>
+                                                        </v-flex>
+                                                        <v-flex xs12 offset-xs2>
+                                                            <v-layout col wrap>
+                                                                <v-flex xs2><p><strong style="color:green"><h3 class="heading">Execution Time:</h3></strong></p></v-flex>
+                                                                <v-flex xs5><v-text-field v-model="executionTime" disabled outline label="Milliseconds"></v-text-field></v-flex>
+                                                                <v-flex xs5 pl-3><v-text-field v-model="executionTimeSeconds" disabled outline label="Seconds"></v-text-field></v-flex>
+                                                            </v-layout>
+                                                        </v-flex>
+                                                        <v-flex xs8 offset-xs2>
+                                                            <v-text-field v-model="swapCount" disabled outline label="Swap_count"></v-text-field>
+                                                        </v-flex>
+                                                    </v-layout>
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
+                            </v-layout>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-layout justify-center>
+                                <v-btn round dark color="primary" @click="redirect()"><v-icon left>arrow_back</v-icon>back</v-btn>
+                            </v-layout>
+                        </v-card-actions>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>  
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script src="./algo.js"></script>
+  <script>
+    let app = new Vue ({
+        el: '#app',
+        created: function () {
+            this.randomize ();
+        },
+        data: {
+            dialog: false,
+            dataSize: 10,
+            arrayElements: [],
+            chosenSortingAlgo: 'Bubble Sort',
+            executionTime: 0,
+            executionTimeSeconds: 0,
+            swapCount: 0,
+            criteria: 'number',
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort"],
+            sizes: [10, 100, 1000, 10000, 100000, 1000000]
+        },
+        methods: {
+            randomize: function () {
+                this.arrayElements = [];
+                for (let i = 0; i < this.dataSize; i++)
+                    this.arrayElements.push(Math.round(Math.random()*100000))
+            },
+            sort: function () {
+                if(this.chosenSortingAlgo === "Bubble Sort") {                   
+                    let {data, execution_time, swap_count} = bubble_sort (this.arrayElements, this.criteria);    
+                    this.arrayElements = []; 
+                    this.swapCount = swap_count 
+                    this.executionTime = execution_time;               
+                    data.forEach((item) => this.arrayElements.push(item))
+                } else if(this.chosenSortingAlgo === "Insertion Sort") {
+                    let {data, execution_time, swap_count} = insertion_sort (this.arrayElements, this.criteria);    
+                    this.arrayElements = [];   
+                    this.swapCount = swap_count              
+                    this.executionTime = execution_time;               
+                    data.forEach((item) => this.arrayElements.push(item))
+                } else if(this.chosenSortingAlgo === "Merge Sort") {
+                    let {data, execution_time} = merge_sort (this.arrayElements, this.criteria);    
+                    this.arrayElements = [];                
+                    this.executionTime = execution_time;               
+                    data.forEach((item) => this.arrayElements.push(item))
+                } else if(this.chosenSortingAlgo === "Quick Sort") {
+                    let {data, execution_time, swap_count} = quick_sort (this.arrayElements, this.criteria);    
+                    this.arrayElements = [];                
+                    this.executionTime = execution_time;                     
+                    this.swapCount = swap_count              
+                    data.forEach((item) => this.arrayElements.push(item))
+                }                   
+                this.executionTimeSeconds = this.executionTime / 1000;
+            },            
+            redirect: function () {
+                window.location = "file:///F:/NodeProject/CS-509/arrays/index.html"
+            }
+        }
+    });
+  </script>
+</body>
+</html>

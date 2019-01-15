@@ -15,7 +15,7 @@
                 <v-toolbar-side-icon></v-toolbar-side-icon>
                 <v-toolbar-title>Arrays Concept Implementation</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon><v-icon>more_vert</v-icon></v-btn>
+                <v-btn dark color="error" @click="redirect()"><v-icon left>list</v-icon>Analysis</v-btn>
             </v-toolbar><br><br>
             <v-container pt-3>
                 <v-content>
@@ -198,10 +198,13 @@
                     this.displayData = [];                
                     data.forEach((item) => this.displayData.push(item))
                 } else if(this.chosenSortingAlgo === "Quick Sort") {
-                    let {data} = merge_sort (this.displayData, this.criteria);    
+                    let {data} = quick_sort (this.displayData, this.criteria);    
                     this.displayData = [];                
                     data.forEach((item) => this.displayData.push(item))
                 }
+            },
+            redirect: function () {
+                window.location = "file:///F:/NodeProject/CS-509/arrays/analysis.html"
             }
         }
     });

@@ -1,10 +1,18 @@
 let swap_count = 0;
 let start_time = 0;
 let end_time = 0;
-
+/**
+ * 
+ * @param {*} data 
+ * @param {*} attribute 
+ */
 function quick_sort (data, attribute) {
+    start_time = new Date ().getTime();
     quick_sort_util (data, attribute, 0, data.length - 1)
-    return {data: data}
+    end_time = new Date ().getTime();
+    let obj =  {data: data, execution_time: end_time - start_time, swap_count: swap_count}
+    swap_count = 0;
+    return obj;
 }
 
 function quick_sort_util (data, attribute, low, high) {
@@ -18,7 +26,7 @@ function quick_sort_util (data, attribute, low, high) {
 function quick_sort_partition (data, attribute, low, high, pivot) {
     let index = low;
     for (let i = low; i <= high; i++) {
-        if(compareTo (data[i], data[pivot], attribute) <= 0) {
+        if(compareTo (data[i], data[pivot], attribute) < 0) {
             swap (data, index, i);
             index++;
         }
@@ -33,10 +41,10 @@ function quick_sort_partition (data, attribute, low, high, pivot) {
  * @param {*} attribute 
  */
 function merge_sort (data, attribute) {
-
+    start_time = new Date ().getTime()
     merge_sort_util (data, attribute , 0, data.length - 1);
-    
-    return {data: data}
+    end_time = new Date ().getTime();
+    return {data: data, execution_time: end_time - start_time}
 }
 
 function merge_sort_util (data, attribute, low, high) {
@@ -82,6 +90,7 @@ function merge_util (data, attribute, low, mid, high) {
  * @param {*} attribute 
  */
 function insertion_sort (data, attribute) {
+    swap_count = 0;
     start_time = new Date().getTime();
     for (let i = 1; i < data.length; i++) {
         let key = data[i];
@@ -89,12 +98,13 @@ function insertion_sort (data, attribute) {
         while (j >= 0 && (compareTo (data[j], key, attribute) > 0)) {
             data[j+1] = data[j]
             j--;
+            swap_count++;
         }
         data[j+1] = key;
     }
     end_time = new Date ().getTime();
     execution_time = end_time - start_time
-    return {data: data, execution_time: end_time - start_time};
+    return {data: data, execution_time: end_time - start_time, swap_count: swap_count};
 }
 
 /**
@@ -103,13 +113,14 @@ function insertion_sort (data, attribute) {
  * @param {*} attribute 
  */
 function bubble_sort (data, attribute) {
+    swap_count = 0;
     start_time = new Date().getTime();
     for (let i = 0; i < data.length; i++) 
         for (let j = 0; j < data.length - i - 1; j++) 
             if(compareTo (data[j], data[j+1], attribute) > 0)
                 swap(data, j, j+1)
     end_time = new Date ().getTime();
-    return {data: data, execution_time: end_time - start_time};
+    return {data: data, execution_time: end_time - start_time, swap_count: swap_count};
 }
 /**
  * 
@@ -163,6 +174,7 @@ function linear_search (data, key, attribute) {
  * Swapping between two arrays.
  */
 function swap_array (first, second, first_index, second_index) {
+    swap_count++;
     let temp = first[first_index];
     first[first_index] = second[second_index];
     second[second_index] = temp;
@@ -175,6 +187,8 @@ function swap_array (first, second, first_index, second_index) {
  * Swapping the elements of the array.
  */
 function swap (arr, i, j) {
+    if(i == j)  return;
+    swap_count++;
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
