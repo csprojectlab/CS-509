@@ -1,4 +1,11 @@
-function linear_search
+function linear_search (data, key, attribute) {
+    for (let i = 0; i < data.length; i++) {
+       if(equalsTo (data[i], key, attribute)) {
+           return data[i];
+       }
+    }
+    return null;
+}
 
 /**
  * 
@@ -56,6 +63,33 @@ function compareTo (arr, i, j, attribute) {
             if(arr[i] > arr[j])   return 1000;
             else if(arr[i] < arr[j])      return -1000;
             else    return 0;
+        }
+    }
+}
+/**
+ * 
+ * @param {*} info 
+ * @param {*} key 
+ * @param {*} attribute 
+ */
+function equalsTo (info, key, attribute) {
+    if(!attribute)      return;
+    switch (attribute) {
+        case 'Roll No': {
+            return (info.rollNo == key)             
+        }
+        case 'Name': {
+           return info.name.localeCompare(info.name) == 0
+        }
+        case 'Subject': {
+           return (info.subject.localeCompare(info.subject) == 0) 
+           
+        }
+        case 'Marks': {
+            return info.marks == key
+        }
+        default: {
+            return (info == key)
         }
     }
 }

@@ -172,7 +172,7 @@
                     this.snackbar = true;  this.message = "SEARCH FIELD IS EMPTY.";  return;
                 }
                 if(this.chosenSearchingAlgo === "Linear Search") {
-                    let foundData = linear_search(this.displayData, this.searchKey)
+                    let foundData = linear_search(this.displayData, this.searchKey, this.criteria)
                     if(foundData) {
                         this.displayData = [];      this.displayData.push(foundData)
                     }
