@@ -131,7 +131,7 @@
             snackbar: '', message: '',
             originalData: [], displayData: [], chosenSortingAlgo: 'Bubble Sort', chosenSearchingAlgo: 'Linear Search', searchKey: '',
             criteria: 'Roll No',
-            sortBy: ["Bubble Sort", "Insertion Sort"],
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort"],
             searchBy: ["Linear Search", "Binary Search"],
             attributes: ["Roll No", "Name", "Subject", "Marks"],
             result: [],
@@ -193,7 +193,15 @@
                     let {data} = insertion_sort (this.displayData, this.criteria);    
                     this.displayData = [];                
                     data.forEach((item) => this.displayData.push(item))
-                }              
+                } else if(this.chosenSortingAlgo === "Merge Sort") {
+                    let {data} = merge_sort (this.displayData, this.criteria);    
+                    this.displayData = [];                
+                    data.forEach((item) => this.displayData.push(item))
+                } else if(this.chosenSortingAlgo === "Quick Sort") {
+                    let {data} = merge_sort (this.displayData, this.criteria);    
+                    this.displayData = [];                
+                    data.forEach((item) => this.displayData.push(item))
+                }
             }
         }
     });
