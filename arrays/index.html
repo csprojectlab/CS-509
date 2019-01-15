@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-content>
+        <v-container>
+            <v-toolbar absolute color="teal lighten-3" dark scroll-off-screen>
+                <v-toolbar-side-icon></v-toolbar-side-icon>
+                <v-toolbar-title>Arrays Concept Implementation</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon><v-icon>more_vert</v-icon></v-btn>
+            </v-toolbar><br><br>
+            <v-container pt-3>
+                <v-content>
+                    <v-layout col wrap xs12>
+                        <v-flex pr-3 xs8>   <!-- LISTING THE ARRAY CONTENTS.  -->
+                            <v-card class="elevation-5" height="1000">
+                                <v-toolbar dark color="primary">
+                                    <v-toolbar-title>ARRAY CONTENT</v-toolbar-title>
+                                    <v-spacer></v-spacer>
+                                    <v-icon>list</v-icon>
+                                </v-toolbar>
+                                <v-card-text>
+                                    <v-layout row wrap>
+                                        <v-flex  xs12>   <!-- SEARCH THE CONTENT FORM THE ARRAY.-->
+                                            <v-layout col>
+                                                <v-text-field v-model="searchKey" prepend-icon="search" label="search.."></v-text-field>
+                                                <v-btn dark color="primary" @click="searchRecord()">search</v-btn>
+                                            </v-layout>
+                                        </v-flex>
+                                        <v-flex xs12>  <!-- DIVIDING IT INTO TWO PARTS. -->
+                                            <v-layout col>
+                                                <v-flex xs4 pr-3>   <!-- THIS IS THE FILTER PART.-->
+                                                    <v-card class="elevation-3">
+                                                        <v-toolbar dark color="red">
+                                                            <v-toolbar-title>FILTER</v-toolbar-title>
+                                                            <v-spacer></v-spacer>
+                                                            <v-icon>filter</v-icon>
+                                                        </v-toolbar>
+                                                        <v-card-text>
+                                                            <v-layout row wrap>
+                                                                <v-flex>   <!-- SORTING FLEX -->
+                                                                    <v-autocomplete v-model="chosenSortingAlgo" :items="sortBy" label="SORT BY" prepend-icon="sort"></v-autocomplete>                                                                    
+                                                                </v-flex>
+                                                                <v-flex>  <!-- SEARCHING FLEX-->
+                                                                    <v-autocomplete v-model="chosenSearchingAlgo" :items="searchBy" label="SEARCH USING" prepend-icon="search"></v-autocomplete>
+                                                                </v-flex>
+                                                                <v-flex>    <!-- CRITERIA -->
+                                                                    <v-autocomplete v-model="criteria" :items="attributes" label="CRITERIA" prepend-icon="person"></v-autocomplete>
+                                                                </v-flex>
+                                                                <v-flex>
+                                                                    <v-btn dark round color="error" @click="sort()"><v-icon left>sort</v-icon> sort</v-btn>
+                                                                </v-flex>
+                                                                <v-flex>
+                                                                    <v-btn dark round color="primary" @click="displayData=originalData">original data</v-btn>
+                                                                </v-flex>
+                                                            </v-layout>
+                                                        </v-card-text>
+                                                    </v-card>
+                                                </v-flex>
+                                                <v-flex xs8>  <!-- THIS IS THE CONTENT PART.-->
+                                                    <v-toolbar scroll-target="#scrolling-techniques" scroll-off-screen dark color="teal">
+                                                        <v-toolbar-title>CONTENT</v-toolbar-title>
+                                                        <v-spacer></v-spacer>
+                                                        <v-icon>list</v-icon>
+                                                    </v-toolbar>
+                                                    <div id="scrolling-techniques" class="scroll-y" style="max-height: 600px;">
+                                                        <v-data-table :headers="headers" :items="displayData" class="elevation-2">
+                                                            <template slot="items" slot-scope="props">
+                                                                <td class="text-xs-left">{{ props.item.rollNo }}</td>
+                                                                <td class="text-xs-left">{{ props.item.name }}</td>
+                                                                <td class="text-xs-left">{{ props.item.subject }}</td>
+                                                                <td class="text-xs-left">{{ props.item.marks }}</td>
+                                                            </template>
+                                                        </v-data-table>
+                                                    </div>                                                    
+                                                </v-flex>
+                                            </v-layout>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-text>
+                            </v-card>
+                        </v-flex>
+                        <v-flex pl-3 xs4>    <!-- ADDING A NEW ENTRY. -->
+                            <v-card class="elevation-5">
+                                <v-toolbar dark color="green">
+                                    <v-toolbar-title>ADD NEW ENTRY</v-toolbar-title>
+                                    <v-spacer></v-spacer>
+                                    <v-icon>add</v-icon>
+                                </v-toolbar>
+                                <v-card-text>
+                                    <v-layout row wrap>
+                                        <v-text-field v-model="rollNo" prepend-icon="person" label="Roll No." type="number"  round></v-text-field>
+                                        <v-text-field v-model="name" prepend-icon="person" label="Name" type="text"  round></v-text-field>
+                                        <v-text-field v-model="subject" prepend-icon="person" label="subject" type="text"  round></v-text-field>
+                                        <v-text-field v-model="marks" prepend-icon="person" label="Marks" type="number"  round></v-text-field>
+                                    </v-layout>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-layout justify-center>
+                                        <v-btn dark color="primary" @click="addRecordEvent()"><v-icon left>add</v-icon>add</v-btn>
+                                    </v-layout>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-content>
+            </v-container>
+        </v-container>
+      </v-content>
+      <v-snackbar bottom color="error" v-model="snackbar"> {{message}}</v-snackbar>
+    </v-app>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./algo.js"></script>
+  <script>
+    
+    var app = new Vue({
+        el: '#app',
+        data: {
+            rollNo: '', name: '', subject: '', marks: '',
+            snackbar: '', message: '',
+            originalData: [], displayData: [], chosenSortingAlgo: 'Bubble Sort', chosenSearchingAlgo: 'Linear Search', searchKey: '',
+            criteria: 'Roll No',
+            sortBy: ["Bubble Sort", "Insertion Sort"],
+            searchBy: ["Linear Search", "Binary Search"],
+            attributes: ["Roll No", "Name", "Subject", "Marks"],
+            result: [],
+            headers: [{text:'Roll No', value: 'rollNo', sortable: false}, {text:'Name', value:'name', sortable: false}, {text:'Subject', value:'subject', sortable: false},
+                     {text:'Marks', value:'marks', sortable: false}],                     
+        },
+        created: async function () {
+            try {
+                const {data} = await axios.get("http://localhost:9000/students")
+                this.originalData = data;
+                this.displayData = this.originalData;
+            } catch (error) {
+                console.log("Error", error)
+            }
+        },
+        methods: {
+            addRecordEvent: async function () {
+                if(!this.rollNo || !this.name || !this.subject || !this.marks) {
+                    this.snackbar = true;
+                    this.message = "ALL THE FIELDS ARE MANDATORY TO ADD A NEW STUDENT."
+                    return;
+                }
+                try {
+                    let obj = { rollNo: this.rollNo, name: this.name.trim(), subject: this.subject.trim(), marks: this.marks}
+                    const {data} = await axios.post("http://localhost:9000/students", obj)
+                    this.rollNo = ''; this.name = ''; this.subject = ''; this.marks = ''
+                    let response  = await axios.get("http://localhost:9000/students")
+                    this.originalData = response.data;
+                    this.displayData = this.originalData;
+                    this.snackbar = true;
+                    this.message = "NEW RECORD ADDED."
+                } catch (error) {
+                    console.log("Error.")
+                }
+            },
+            searchRecord: function () {
+                if(!this.searchKey) {
+                    this.snackbar = true;  this.message = "SEARCH FIELD IS EMPTY.";  return;
+                }
+                if(this.chosenSearchingAlgo === "Linear Search") {
+                    let foundData = linear_search(this.displayData, this.searchKey)
+                    if(foundData) {
+                        this.displayData = [];      this.displayData.push(foundData)
+                    }
+                } else if(this.chosenSearchingAlgo === "Binary Search") {
+                    let foundIndex = binary_search (this.displayData, this.searchKey, this.criteria)
+                    if(foundIndex != -1) {
+                        let obj = this.displayData[foundIndex]
+                        this.displayData = [];      this.displayData.push(obj)
+                    }
+                }
+            },
+            sort: function () {
+                if(this.chosenSortingAlgo === "Bubble Sort") {                   
+                    let r = bubble_sort (this.displayData, this.criteria);    
+                    this.displayData = [];                
+                    r.forEach((item) => this.displayData.push(item))
+                } else if(this.chosenSortingAlgo === "Insertion Sort") {
+
+                }              
+            }
+        }
+    });
+
+  </script>
+</body>
+</html>

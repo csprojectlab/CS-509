@@ -1,10 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const {Student} = require('./../db/db')
 let app = express();
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
+app.use(cors())
 
 app.get('/students', (_, response) => {
     Student.findAll().then((data) => response.json(data))
