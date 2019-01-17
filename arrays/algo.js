@@ -2,6 +2,11 @@ let swap_count = 0;
 let start_time = 0;
 let end_time = 0;
 
+/**
+ * 
+ * @param {*} data 
+ * @param {*} attribute 
+ */
 function selection_sort (data, attribute) {
     start_time = new Date ().getTime();
     for (let i = 0; i < data.length; i++) {

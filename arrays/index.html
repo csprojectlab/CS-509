@@ -125,6 +125,7 @@
   <script src="./linearSearch.js"></script>
   <script src="./binarySearch.js"></script>
   <script src="./algo.js"></script>
+  <script src="./heap.js"></script>
   <script>
     
     var app = new Vue({
@@ -134,7 +135,7 @@
             snackbar: '', message: '',
             originalData: [], displayData: [], chosenSortingAlgo: 'Bubble Sort', chosenSearchingAlgo: 'Linear Search', searchKey: '',
             criteria: 'Roll No',
-            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort"],
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort", "Heap Sort"],
             searchBy: ["Linear Search", "Binary Search"],
             attributes: ["Roll No", "Name", "Subject", "Marks"],
             result: [],
@@ -206,6 +207,10 @@
                     data.forEach((item) => this.displayData.push(item))
                 } else if(this.chosenSortingAlgo === "Selection Sort") {
                     let {data} = selection_sort (this.displayData, this.criteria);    
+                    this.displayData = [];                
+                    data.forEach((item) => this.displayData.push(item))
+                } else if(this.chosenSortingAlgo === "Heap Sort") {
+                    let {data} = heap_sort (this.displayData, this.criteria);    
                     this.displayData = [];                
                     data.forEach((item) => this.displayData.push(item))
                 }
