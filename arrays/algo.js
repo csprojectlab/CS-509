@@ -1,6 +1,26 @@
 let swap_count = 0;
 let start_time = 0;
 let end_time = 0;
+
+function selection_sort (data, attribute) {
+    start_time = new Date ().getTime();
+    for (let i = 0; i < data.length; i++) {
+        let min_index = i;
+        let min = data[i];
+        for (let j = i + 1; j < data.length; j++) {
+            if(compareTo (data[j], min, attribute) < 0) {
+                min_index = j;
+                min = data[j];
+            }
+        }
+        swap (data, min_index, i);
+    }
+    end_time = new Date ().getTime();
+    let obj =  {data: data, execution_time: end_time - start_time, swap_count: swap_count}
+    swap_count = 0;
+    return obj;
+}
+
 /**
  * 
  * @param {*} data 
@@ -104,7 +124,9 @@ function insertion_sort (data, attribute) {
     }
     end_time = new Date ().getTime();
     execution_time = end_time - start_time
-    return {data: data, execution_time: end_time - start_time, swap_count: swap_count};
+    let obj =  {data: data, execution_time: end_time - start_time, swap_count: swap_count};
+    swap_count = 0;
+    return obj;
 }
 
 /**
@@ -120,7 +142,9 @@ function bubble_sort (data, attribute) {
             if(compareTo (data[j], data[j+1], attribute) > 0)
                 swap(data, j, j+1)
     end_time = new Date ().getTime();
-    return {data: data, execution_time: end_time - start_time, swap_count: swap_count};
+    let obj =  {data: data, execution_time: end_time - start_time, swap_count: swap_count};
+    swap_count = 0;
+    return obj;
 }
 
 

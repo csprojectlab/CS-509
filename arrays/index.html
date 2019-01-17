@@ -134,7 +134,7 @@
             snackbar: '', message: '',
             originalData: [], displayData: [], chosenSortingAlgo: 'Bubble Sort', chosenSearchingAlgo: 'Linear Search', searchKey: '',
             criteria: 'Roll No',
-            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort"],
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort"],
             searchBy: ["Linear Search", "Binary Search"],
             attributes: ["Roll No", "Name", "Subject", "Marks"],
             result: [],
@@ -185,7 +185,7 @@
                         let obj = this.displayData[foundIndex]
                         this.displayData = [];      this.displayData.push(obj)
                     }
-                }
+                } 
             },
             sort: function () {
                 if(this.chosenSortingAlgo === "Bubble Sort") {                   
@@ -202,6 +202,10 @@
                     data.forEach((item) => this.displayData.push(item))
                 } else if(this.chosenSortingAlgo === "Quick Sort") {
                     let {data} = quick_sort (this.displayData, this.criteria);    
+                    this.displayData = [];                
+                    data.forEach((item) => this.displayData.push(item))
+                } else if(this.chosenSortingAlgo === "Selection Sort") {
+                    let {data} = selection_sort (this.displayData, this.criteria);    
                     this.displayData = [];                
                     data.forEach((item) => this.displayData.push(item))
                 }
