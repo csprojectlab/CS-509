@@ -98,6 +98,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
   <script src="./utils.js"></script>
   <script src="./algo.js"></script>
+  <script src="./heap.js"></script>
   <script>
     let app = new Vue ({
         el: '#app',
@@ -113,7 +114,7 @@
             executionTimeSeconds: 0,
             swapCount: 0,
             criteria: 'number',
-            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort"],
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort", "Heap Sort"],
             sizes: [10, 100, 1000, 10000, 100000, 1000000]
         },
         methods: {
@@ -148,6 +149,12 @@
                     data.forEach((item) => this.arrayElements.push(item))
                 } else if(this.chosenSortingAlgo === "Selection Sort") {
                     let {data, execution_time, swap_count} = quick_sort (this.arrayElements, this.criteria);    
+                    this.arrayElements = [];                
+                    this.executionTime = execution_time;                     
+                    this.swapCount = swap_count              
+                    data.forEach((item) => this.arrayElements.push(item))
+                } else if (this.chosenSortingAlgo === "Heap Sort") {
+                    let {data, execution_time, swap_count} = heap_sort (this.arrayElements, this.criteria);    
                     this.arrayElements = [];                
                     this.executionTime = execution_time;                     
                     this.swapCount = swap_count              

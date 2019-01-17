@@ -1,4 +1,5 @@
 function heap_sort (data, attribute) {
+    swap_count = 0;
     start_time = new Date ().getTime();
     let arr = [];
     for (let i = 0; i < data.length; i++) {

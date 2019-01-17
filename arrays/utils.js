@@ -35,7 +35,7 @@ function swap (arr, i, j) {
  * @param {*} attribute 
  * To compare between the objects based on their attributes.
  */
-function compareTo (first, second, attribute) {
+function compareTo (first, second, attribwute) {
     if(!attribute)      return;
     switch (attribute) {
         case 'Roll No': {           
