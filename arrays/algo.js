@@ -7,6 +7,37 @@ let end_time = 0;
  * @param {*} data 
  * @param {*} attribute 
  */
+function shell_sort (data, attribute) {
+    swap_count = 0;
+    start_time = new Date ().getTime();
+    let hFactor = data.length;
+    for (let h = Math.floor(hFactor / 2); h > 0; h = Math.floor(h / 2)) {
+        shell_sort_util(data, attribute, h);
+    } 
+    end_time = new Date ().getTime();
+    let obj =  {data: data, execution_time: end_time - start_time, swap_count: swap_count}
+    swap_count = 0;
+    return obj;
+}
+
+function shell_sort_util (data, attribute, hFactor) {
+    for (let i = hFactor; i < data.length; i++) {
+        let key = data[i];
+        let j = i;
+        while(j > hFactor - 1 && compareTo (data[j - hFactor], key, attribute) > 0) {
+            data[j] = data[j - hFactor];
+            j -= hFactor;
+            swap_count++;
+        }
+        data[j] = key;
+    }
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} attribute 
+ */
 function selection_sort (data, attribute) {
     start_time = new Date ().getTime();
     for (let i = 0; i < data.length; i++) {

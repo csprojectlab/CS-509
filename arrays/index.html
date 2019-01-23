@@ -4,7 +4,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  
+  <title>Arrays</title>
 </head>
 <body>
   <div id="app">
@@ -135,7 +135,7 @@
             snackbar: '', message: '',
             originalData: [], displayData: [], chosenSortingAlgo: 'Bubble Sort', chosenSearchingAlgo: 'Linear Search', searchKey: '',
             criteria: 'Roll No',
-            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort", "Heap Sort"],
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort", "Heap Sort", "Shell Sort"],
             searchBy: ["Linear Search", "Binary Search"],
             attributes: ["Roll No", "Name", "Subject", "Marks"],
             result: [],
@@ -189,31 +189,19 @@
                 } 
             },
             sort: function () {
-                if(this.chosenSortingAlgo === "Bubble Sort") {                   
-                    let {data} = bubble_sort (this.displayData, this.criteria);    
-                    this.displayData = [];                
-                    data.forEach((item) => this.displayData.push(item))
-                } else if(this.chosenSortingAlgo === "Insertion Sort") {
-                    let {data} = insertion_sort (this.displayData, this.criteria);    
-                    this.displayData = [];                
-                    data.forEach((item) => this.displayData.push(item))
-                } else if(this.chosenSortingAlgo === "Merge Sort") {
-                    let {data} = merge_sort (this.displayData, this.criteria);    
-                    this.displayData = [];                
-                    data.forEach((item) => this.displayData.push(item))
-                } else if(this.chosenSortingAlgo === "Quick Sort") {
-                    let {data} = quick_sort (this.displayData, this.criteria);    
-                    this.displayData = [];                
-                    data.forEach((item) => this.displayData.push(item))
-                } else if(this.chosenSortingAlgo === "Selection Sort") {
-                    let {data} = selection_sort (this.displayData, this.criteria);    
-                    this.displayData = [];                
-                    data.forEach((item) => this.displayData.push(item))
-                } else if(this.chosenSortingAlgo === "Heap Sort") {
-                    let {data} = heap_sort (this.displayData, this.criteria);    
-                    this.displayData = [];                
-                    data.forEach((item) => this.displayData.push(item))
+                let temp = null;
+                switch(this.chosenSortingAlgo) {
+                    case "Bubble Sort": {let {data} = bubble_sort (this.displayData, this.criteria); temp = data; break;}
+                    case "Insertion Sort": {let {data} = insertion_sort (this.displayData, this.criteria); temp = data; break;}
+                    case "Merge Sort": {let {data} = merge_sort (this.displayData, this.criteria); temp = data; break;}
+                    case "Quick Sort": {let {data} = quick_sort (this.displayData, this.criteria); temp = data; break;}
+                    case "Selection Sort": {let {data} = selection_sort (this.displayData, this.criteria); temp = data; break;}
+                    case "Heap Sort": {let {data} = heap_sort (this.displayData, this.criteria); temp = data; break;}
+                    case "Shell Sort":  {let {data} = shell_sort (this.displayData, this.criteria); temp = data; break;}
+                    default: console.log("This is hello from the default.")
                 }
+                this.displayData = [];                
+                temp.forEach((item) => this.displayData.push(item))
             },
             redirect: function () {
                 window.location = "file:///F:/NodeProject/CS-509/arrays/analysis.html"

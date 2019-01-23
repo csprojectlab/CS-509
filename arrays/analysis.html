@@ -106,7 +106,6 @@
             this.randomize ();
         },
         data: {
-            dialog: false,
             dataSize: 10,
             arrayElements: [],
             chosenSortingAlgo: 'Bubble Sort',
@@ -114,7 +113,7 @@
             executionTimeSeconds: 0,
             swapCount: 0,
             criteria: 'number',
-            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort", "Heap Sort"],
+            sortBy: ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Selection Sort", "Heap Sort", "Shell Sort"],
             sizes: [10, 100, 1000, 10000, 100000, 1000000]
         },
         methods: {
@@ -155,6 +154,12 @@
                     data.forEach((item) => this.arrayElements.push(item))
                 } else if (this.chosenSortingAlgo === "Heap Sort") {
                     let {data, execution_time, swap_count} = heap_sort (this.arrayElements, this.criteria);    
+                    this.arrayElements = [];                
+                    this.executionTime = execution_time;                     
+                    this.swapCount = swap_count              
+                    data.forEach((item) => this.arrayElements.push(item))
+                } else if(this.chosenSortingAlgo === "Shell Sort") {
+                    let {data, execution_time, swap_count} = shell_sort (this.arrayElements, this.criteria);    
                     this.arrayElements = [];                
                     this.executionTime = execution_time;                     
                     this.swapCount = swap_count              
