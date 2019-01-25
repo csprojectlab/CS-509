@@ -13,7 +13,7 @@ function shell_sort (data, attribute) {
     let hFactor = data.length;
     for (let h = Math.floor(hFactor / 2); h > 0; h = Math.floor(h / 2)) {
         shell_sort_util(data, attribute, h);
-    } 
+    }
     end_time = new Date ().getTime();
     let obj =  {data: data, execution_time: end_time - start_time, swap_count: swap_count}
     swap_count = 0;
@@ -21,9 +21,9 @@ function shell_sort (data, attribute) {
 }
 
 function shell_sort_util (data, attribute, hFactor) {
-    for (let i = hFactor; i < data.length; i++) {
-        let key = data[i];
-        let j = i;
+    for (let i = hFactor; i < data.length; i++) {    // START FROM THE HFACTOR.
+        let key = data[i];     // SAVE THE ELEMENT.
+        let j = i;  
         while(j > hFactor - 1 && compareTo (data[j - hFactor], key, attribute) > 0) {
             data[j] = data[j - hFactor];
             j -= hFactor;
@@ -43,6 +43,7 @@ function selection_sort (data, attribute) {
     for (let i = 0; i < data.length; i++) {
         let min_index = i;
         let min = data[i];
+        // FIND THE MIN FROM THE REMAINING SUB ARRAY.
         for (let j = i + 1; j < data.length; j++) {
             if(compareTo (data[j], min, attribute) < 0) {
                 min_index = j;

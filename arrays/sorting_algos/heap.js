@@ -1,13 +1,18 @@
+/**
+ * 
+ * @param {*} data 
+ * @param {*} attribute 
+ */
 function heap_sort(data, attribute) {
   swap_count = 0;
   start_time = new Date().getTime();
-  let arr = [];
-  for (let i = 0; i < data.length; i++) {
+  let arr = [];               // THIS ARRAY SERVERS AS A HEAP.
+  for (let i = 0; i < data.length; i++) {     // CREATING HEAP.
     arr.push(data[i]);
     upHeapify(arr, attribute, arr.length - 1);
   }
   // Now the arr contains the data in heap form. MIN HEAP.
-  data = [];
+  data = [];       
   while (arr.length > 1) {
     data.push(arr[0]); // Top of the heap.
     let temp = arr.pop(); // Get the last element.
@@ -16,6 +21,7 @@ function heap_sort(data, attribute) {
   }
   data.push(arr.pop()); // Pushing the last element.
   end_time = new Date().getTime();
+  // CREATE OBJECT TO RETURN.
   let obj = {
     data: data,
     execution_time: end_time - start_time,
